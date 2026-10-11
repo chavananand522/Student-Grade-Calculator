@@ -1,4 +1,3 @@
-
 function calculateResult() {
     const name = document.getElementById("name").value.trim();
     const subjectIds = ["java", "javascript", "css", "database"];
@@ -20,6 +19,7 @@ function calculateResult() {
             input.focus();
             return;
         }
+
         marks.push(Number(value));
     }
 
@@ -46,8 +46,30 @@ function calculateResult() {
     }
 
     result.innerHTML = `
-    <h2>Result:${passed ? "PASS" : "FAIL"}</h2>
-    <strong>Student</strong>
-    `
+        <h2>Result: ${passed ? "PASS" : "FAIL"}</h2>
+        <strong>Student:</strong> ${escapeHTML(name)}<br>
+        <strong>Total Marks:</strong> ${total} / 400<br>
+        <strong>Percentage:</strong> ${percentage.toFixed(2)}%<br>
+        <strong>Grade:</strong> ${grade}<br>
+    `;
+}
 
+function escapeHTML(value) {
+    return value.replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[character]);
+}
+
+function resetForm() {
+    document.getElementById("name").value = "";
+
+    for (const id of ["java", "javascript", "css", "database"]) {
+        document.getElementById(id).value = "";
+    }
+
+    document.getElementById("result").innerHTML = "";
 }
